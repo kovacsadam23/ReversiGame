@@ -19,7 +19,7 @@ public class Player {
         return this.name;
     }
 
-
+/*
     public Square nextMove(Board board) {
 
     }
@@ -61,5 +61,5 @@ public class AIPlayer extends Player {
     @Override
     public Square nextMove(Board board) {
 
-    }
+    } */
 }
