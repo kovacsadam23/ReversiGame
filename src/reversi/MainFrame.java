@@ -29,10 +29,12 @@ public class MainFrame extends JFrame implements ActionListener {
         info.addActionListener(infoListener);
 
 
+        ActionListener startListener = new StartButtonActionListener();
         JButton start = new JButton("START");
         start.setFont(new Font("Courier New", Font.BOLD, 40));
         start.setBackground(Color.GREEN);
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
+        start.addActionListener(startListener);
 
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(title);
@@ -83,6 +85,17 @@ public class MainFrame extends JFrame implements ActionListener {
             dispose();
             SettingsFrame settingsFrame = new SettingsFrame();
             settingsFrame.setVisible(true);
+        }
+    }
+
+
+    private class StartButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            GameFrame gameFrame = new GameFrame();
+            gameFrame.setVisible(true);
         }
     }
 }
