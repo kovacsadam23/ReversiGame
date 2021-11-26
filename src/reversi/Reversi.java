@@ -22,7 +22,6 @@ public class Reversi {
 
     }
 
-    // PUBLIC
     public Reversi() {
         this.players[0] = null;
         this.players[1] = null;
