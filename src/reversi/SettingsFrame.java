@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsFrame extends MainFrame{
+public class SettingsFrame extends MainFrame implements XMLHandler{
 
     public void initComponents() {
         JPanel p = new JPanel();

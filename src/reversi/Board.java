@@ -1,13 +1,20 @@
 package reversi;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Board {
     Piece[][] pcs = new Piece[8][8];
+    JButton[][] fields = new JButton[8][8];
+    Image white = ImageIO.read(getClass().getResource("resources/reversi_white.png"));
+    Image black = ImageIO.read(getClass().getResource("resources/reversi_black.png"));
 
-
-
-    public Board() {
+    public Board() throws IOException {
         Arrays.fill(pcs, null);
     }
 
@@ -166,4 +173,33 @@ public class Board {
         return counter;
     }
 
+
+    public void create(JPanel panel) {
+        Border border = new LineBorder(Color.black);
+
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                fields[r][c] = new JButton();
+                fields[r][c].setSize(30, 30);
+                fields[r][c].setBorder(border);
+                fields[r][c].setBackground(new Color(0, 128, 0));
+
+                panel.add(fields[r][c]);
+            }
+        }
+    }
+
+
+    public void draw() {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; r < 8; c++) {
+                if (pcs[r][c].getColor() == 0) {
+                    fields[r][c].setIcon(new ImageIcon(white));
+                }
+                else {
+                    fields[r][c].setIcon(new ImageIcon(black));
+                }
+            }
+        }
+    }
 }

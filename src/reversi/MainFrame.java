@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainFrame extends JFrame implements ActionListener {
-
 
     public void initComponents() {
         JPanel p = new JPanel();
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame implements ActionListener {
     public MainFrame() {
         super("Reversi");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        Image icon = Toolkit.getDefaultToolkit().getImage("reversi_logo.jpg");
+        Image icon = Toolkit.getDefaultToolkit().getImage("resources/reversi_logo.jpg");
         this.setIconImage(icon);
 
         this.setMinimumSize(new Dimension(900, 600));
@@ -63,7 +63,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("faszom2");
+        System.out.println("test");
     }
 
 
@@ -94,8 +94,13 @@ public class MainFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
-            GameFrame gameFrame = new GameFrame();
-            gameFrame.setVisible(true);
+            Reversi reversi = null;
+            try {
+                reversi = new Reversi();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            reversi.setVisible(true);
         }
     }
 }

@@ -1,6 +1,5 @@
 package reversi;
 
-import org.w3c.dom.css.RGBColor;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,7 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameFrame extends MainFrame{
+public class GameFrame extends MainFrame implements XMLHandler{
+
 
     public void initComponents() {
 
@@ -41,17 +41,6 @@ public class GameFrame extends MainFrame{
         board.setSize(800, 800);
         JButton[][] fields = new JButton[8][8];
 
-        Border border = new LineBorder(Color.black);
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++) {
-                fields[r][c] = new JButton();
-                fields[r][c].setSize(30, 30);
-                fields[r][c].setBorder(border);
-                fields[r][c].setBackground(new Color(0, 128, 0));
-
-                board.add(fields[r][c]);
-            }
-        }
 
         game.add(board);
         game.add(score);
