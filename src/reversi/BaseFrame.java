@@ -7,7 +7,7 @@ public class BaseFrame extends JFrame {
     public BaseFrame() {
         super("Reversi");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        Image icon = Toolkit.getDefaultToolkit().getImage("resources/reversi_logo.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("reversi_logo.png");
         this.setIconImage(icon);
 
         this.setMinimumSize(new Dimension(900, 600));

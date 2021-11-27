@@ -44,7 +44,7 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         s2.add(player2);
 
 
-        JPanel s3 = new JPanel();
+        JPanel s4 = new JPanel();
         String[] enemies = new String[3];
         enemies[0] = "Human player";
         enemies[1] = "AI player";
@@ -52,16 +52,28 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
 
         JLabel e = new JLabel("Enemy type:");
         e.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JComboBox jcb = new JComboBox(enemies);
-        jcb.setFont(new Font("Arial", Font.PLAIN, 30));
+        JComboBox ejcb = new JComboBox(enemies);
+        ejcb.setFont(new Font("Arial", Font.PLAIN, 30));
 
-        s3.add(e);
-        s3.add(jcb);
+        s4.add(e);
+        s4.add(ejcb);
 
-        JPanel s4 = new JPanel();
-        s4.add(back);
-        s4.add(Box.createRigidArea(new Dimension(20, 0)));
-        s4.add(save);
+        JPanel s3 = new JPanel();
+        String[] gameType = new String[2];
+        gameType[0] = "Reversi";
+        gameType[1] = "Othello";
+        JLabel g = new JLabel("Game type:");
+        g.setFont(new Font("Courier New", Font.PLAIN, 30));
+        JComboBox gjcb = new JComboBox(gameType);
+        gjcb.setFont(new Font("Arial", Font.PLAIN, 30));
+
+        s3.add(g);
+        s3.add(gjcb);
+
+        JPanel s5 = new JPanel();
+        s5.add(back);
+        s5.add(Box.createRigidArea(new Dimension(20, 0)));
+        s5.add(save);
 
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(title);
@@ -69,6 +81,7 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         p.add(s2);
         p.add(s3);
         p.add(s4);
+        p.add(s5);
 
         this.add(p, BorderLayout.CENTER);
     }
