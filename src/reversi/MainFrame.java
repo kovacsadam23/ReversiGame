@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends BaseFrame implements ActionListener {
 
     public void initComponents() {
         JPanel p = new JPanel();
@@ -50,13 +50,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
 
     public MainFrame() {
-        super("Reversi");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        Image icon = Toolkit.getDefaultToolkit().getImage("resources/reversi_logo.jpg");
-        this.setIconImage(icon);
-
-        this.setMinimumSize(new Dimension(900, 600));
-        this.setResizable(false);
         this.initComponents();
         this.setVisible(true);
     }

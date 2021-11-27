@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Reversi extends MainFrame{
+public class Reversi extends BaseFrame{
     int gameType = 0;
     Player[] players = new Player[2];
     Board board;
@@ -32,10 +32,12 @@ public class Reversi extends MainFrame{
     public Reversi() throws IOException {
         this.players[0] = null;
         this.players[1] = null;
+        this.board = new Board();
+        this.initComponents();
     }
 
 
-    public void initComponents() {
+    public void initComponents() throws IOException {
 
         JPanel game = new JPanel();
         game.setSize(800, 800);
@@ -44,6 +46,7 @@ public class Reversi extends MainFrame{
         score.setLayout(new BoxLayout(score, BoxLayout.Y_AXIS));
 
         JLabel moves = new JLabel("valami");
+
 
         JButton back = new JButton("Back");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -70,11 +73,12 @@ public class Reversi extends MainFrame{
         game.setLayout(new GridLayout());
         this.add(game);
         this.setSize(1600, 800);
+        this.setVisible(true);
         play();
     }
 
 
-    public void play() {
+    public void play() throws IOException {
         board.initBoard();
         board.create(table);
         board.draw();

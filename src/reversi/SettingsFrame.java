@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsFrame extends MainFrame implements XMLHandler{
+public class SettingsFrame extends BaseFrame implements XMLHandler{
 
     public void initComponents() {
         JPanel p = new JPanel();
@@ -71,6 +71,10 @@ public class SettingsFrame extends MainFrame implements XMLHandler{
         p.add(s4);
 
         this.add(p, BorderLayout.CENTER);
+    }
+
+    public SettingsFrame() {
+        this.initComponents();
     }
 
 

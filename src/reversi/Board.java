@@ -7,15 +7,18 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Board {
     Piece[][] pcs = new Piece[8][8];
     JButton[][] fields = new JButton[8][8];
-    Image white = ImageIO.read(getClass().getResource("resources/reversi_white.png"));
-    Image black = ImageIO.read(getClass().getResource("resources/reversi_black.png"));
 
-    public Board() throws IOException {
-        Arrays.fill(pcs, null);
+    public Board() {
+        for (int i = 0; i < pcs.length; i++) {
+            for (int j = 0; j < pcs.length; j++) {
+                pcs[i][j] = null;
+            }
+        }
     }
 
     public Piece getPiece(int x, int y) {
@@ -190,14 +193,30 @@ public class Board {
     }
 
 
-    public void draw() {
+    public void draw() throws IOException {
+        // Image white = ImageIO.read(Objects.requireNonNull(getClass().getResource("resources/reversi_white.png")));
+        // Image black = ImageIO.read(Objects.requireNonNull(getClass().getResource("resources/reversi_black.png")));
+        ImageIcon white = new ImageIcon("reversi_white.png");
+        ImageIcon black = new ImageIcon("reversi_black.png");
+
+        Image w = white.getImage();
+        Image white_reduced = w.getScaledInstance(100, 100, 0);
+
+        Image b = black.getImage();
+        Image black_reduced = b.getScaledInstance(100, 100, 0);
+
         for (int r = 0; r < 8; r++) {
-            for (int c = 0; r < 8; c++) {
-                if (pcs[r][c].getColor() == 0) {
-                    fields[r][c].setIcon(new ImageIcon(white));
-                }
-                else {
-                    fields[r][c].setIcon(new ImageIcon(black));
+            for (int c = 0; c < 8; c++) {
+
+                if (pcs[r][c] != null) {
+                    if (pcs[r][c].getColor() == 0) {
+                        fields[r][c].setIcon(new ImageIcon(white_reduced));
+                        // fields[r][c].setBackground(Color.WHITE);
+                    }
+                    else {
+                        fields[r][c].setIcon(new ImageIcon(black_reduced));
+                        // fields[r][c].setBackground(Color.BLACK);
+                    }
                 }
             }
         }
