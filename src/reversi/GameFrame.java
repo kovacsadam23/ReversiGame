@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameFrame extends MainFrame implements XMLHandler{
+public class GameFrame extends MainFrame{
 
 
     public void initComponents() {

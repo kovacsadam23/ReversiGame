@@ -40,7 +40,7 @@ public class Player {
 
 
  */
-    public class HumanPlayer extends Player {
+    static class HumanPlayer extends Player {
         public HumanPlayer(String name, int color) {
             super(name, color);
         }
@@ -74,7 +74,7 @@ public class Player {
 
 
     */
-    class AIPlayer extends Player {
+static class AIPlayer extends Player {
         public AIPlayer(String name, int color) {
             super(name, color);
         }

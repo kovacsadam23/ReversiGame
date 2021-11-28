@@ -1,9 +1,12 @@
 package reversi;
 
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicOptionPaneUI;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,35 +17,53 @@ public class Reversi extends BaseFrame{
     Player[] players = new Player[2];
     Board board;
     int currentPlayer = 0;
-    int opponent;
+    int enemyType;
     JPanel table;
     JTextArea message;
     JLabel moves;
     boolean passed = false;
+    XMLHandler xmlHandler;
 
     private void gameTypeSelect(int type) {
         this.gameType = type;
     }
 
     private void opponentTypeSelect(int type) {
-        this.opponent = type;
+        this.enemyType = type;
     }
 
     private void setPlayerName() {
 
     }
 
-    public Reversi() throws IOException {
+    public Reversi() throws IOException, ParserConfigurationException, SAXException {
         this.players[0] = null;
         this.players[1] = null;
         this.board = new Board();
+        this.xmlHandler = new XMLHandler();
         this.initComponents();
     }
 
 
-    public void initComponents() throws IOException {
-        players[0] = new Player("Player 1", 0);
-        players[1] = new Player("Player 2", 1);
+    public void initComponents() throws IOException, ParserConfigurationException, SAXException {
+        xmlHandler.readXML();
+        this.gameType = xmlHandler.getGameType();
+        this.enemyType = xmlHandler.getEnemyType();
+        String player1 = xmlHandler.getPlayer1();
+        String player2 = xmlHandler.getPlayer2();
+
+        if (enemyType == 1) {
+            players[0] = new Player.HumanPlayer(player1, 0);
+            players[1] = new Player(player2, 1);
+        }
+        else if (enemyType == 2) {
+            players[0] = new Player.HumanPlayer(player1, 0);
+            players[1] = new Player.AIPlayer(player2, 1);
+        }
+        else {
+            players[0] = new Player(player1, 0);
+            players[1] = new Player(player2, 1);
+        }
 
         JPanel game = new JPanel();
         game.setSize(800, 800);
@@ -107,7 +128,7 @@ public class Reversi extends BaseFrame{
             }
         } else {
             message.setText("Does not have valid move, must pass");
-            if (passed || gameType == 0) ;
+            if (passed || gameType == 1) ;
             {
                 message.setText("End of game");
             }
@@ -124,7 +145,7 @@ public class Reversi extends BaseFrame{
         moves.setText(whoMoves);
 
         if (players[currentPlayer].isAutomated()) {
-            message.setText("Click on the board to continue...");
+            message.setText("Click on the board \nto continue...");
         }
     }
 
@@ -133,53 +154,6 @@ public class Reversi extends BaseFrame{
         board.initBoard();
         board.create(table);
         board.draw();
-        if (this.opponent == 0) {
-
-        }
-        players[0] = new Player("Player 1", 0);
-        players[1] = new Player("Player 2", 1);
-
-        // currentPlayer = 0;
-        // boolean passed = false;
-        /*
-        for(;;) {
-            if (board.hasValidMove(players[currentPlayer])) {
-                Square sq = players[currentPlayer].nextMove(board);
-
-                if (board.isValidMove(players[currentPlayer], sq.getx(), sq.gety())) {
-                    board.makeMove(players[currentPlayer], sq);
-                    board.draw();
-                    currentPlayer = 1 - currentPlayer;
-                    passed = false;
-                }
-                else {
-                    System.out.println("Wrong move");
-                }
-            }
-            else {
-                System.out.println("Does not have valid move, must pass");
-                if (passed || gameType == 0);
-                {
-                    System.out.println("End of game");
-                    break;
-                }
-                passed = true;
-                currentPlayer = 1 - currentPlayer;
-            }
-        }
-
-        int whiteCount = board.countColor(0);
-        int blackCount = board.countColor(1);
-
-        if (whiteCount > blackCount) {
-            System.out.println("White won");
-        }
-        if (blackCount > whiteCount) {
-            System.out.println("Black won");
-        }
-        else {
-            System.out.println("Draw");
-        }*/
     }
 
 

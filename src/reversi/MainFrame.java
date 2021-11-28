@@ -1,6 +1,9 @@
 package reversi;
 
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,7 +79,16 @@ public class MainFrame extends BaseFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             dispose();
-            SettingsFrame settingsFrame = new SettingsFrame();
+            SettingsFrame settingsFrame = null;
+            try {
+                settingsFrame = new SettingsFrame();
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (SAXException ex) {
+                ex.printStackTrace();
+            }
             settingsFrame.setVisible(true);
         }
     }
@@ -92,6 +104,10 @@ public class MainFrame extends BaseFrame implements ActionListener {
                 reversi = new Reversi();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (ParserConfigurationException parserConfigurationException) {
+                parserConfigurationException.printStackTrace();
+            } catch (SAXException saxException) {
+                saxException.printStackTrace();
             }
             reversi.setVisible(true);
         }

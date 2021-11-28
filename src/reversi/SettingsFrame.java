@@ -1,13 +1,30 @@
 package reversi;
 
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class SettingsFrame extends BaseFrame implements XMLHandler{
+public class SettingsFrame extends BaseFrame{
+    int gameType = 0;                   // 1 - Reversi, 2 - Othello
+    int enemyType = 0;                  // 1 - HumanPlayer, 2 - AIPlayer, 3 - TestPlayer
+    String player1;
+    String player2;
+    XMLHandler xmlHandler;
 
-    public void initComponents() {
+    JComboBox gjcb, ejcb;
+
+    public void initComponents() throws ParserConfigurationException, IOException, SAXException {
+        this.xmlHandler.readXML();
+        player1 = xmlHandler.getPlayer1();
+        player2 = xmlHandler.getPlayer2();
+        gameType = xmlHandler.getGameType();
+        enemyType = xmlHandler.getEnemyType();
+
         JPanel p = new JPanel();
 
         JLabel title = new JLabel("Settings");
@@ -29,20 +46,20 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         JPanel s1 = new JPanel();
         JLabel p1 = new JLabel("Player 1's name:");
         p1.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JTextField player1 = new JTextField(30);
-        player1.setFont(new Font("Courier New", Font.PLAIN, 30));
+        JTextField pl1 = new JTextField(30);
+        pl1.setFont(new Font("Courier New", Font.PLAIN, 30));
 
         s1.add(p1);
-        s1.add(player1);
+        s1.add(pl1);
 
         JPanel s2 = new JPanel();
         JLabel p2 = new JLabel(("Player 2's name:"));
         p2.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JTextField player2 = new JTextField(30);
-        player2.setFont(new Font("Courier New", Font.PLAIN, 30));
+        JTextField pl2 = new JTextField(30);
+        pl2.setFont(new Font("Courier New", Font.PLAIN, 30));
 
         s2.add(p2);
-        s2.add(player2);
+        s2.add(pl2);
 
 
         JPanel s4 = new JPanel();
@@ -53,7 +70,7 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
 
         JLabel e = new JLabel("Enemy type:");
         e.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JComboBox ejcb = new JComboBox(enemies);
+        ejcb = new JComboBox(enemies);
         ejcb.setFont(new Font("Arial", Font.PLAIN, 30));
 
         s4.add(e);
@@ -65,7 +82,7 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         gameType[1] = "Othello";
         JLabel g = new JLabel("Game type:");
         g.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JComboBox gjcb = new JComboBox(gameType);
+        gjcb = new JComboBox(gameType);
         gjcb.setFont(new Font("Arial", Font.PLAIN, 30));
 
         s3.add(g);
@@ -84,10 +101,14 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         p.add(s4);
         p.add(s5);
 
+        pl1.setText(player1);
+        pl2.setText(player2);
+
         this.add(p, BorderLayout.CENTER);
     }
 
-    public SettingsFrame() {
+    public SettingsFrame() throws ParserConfigurationException, IOException, SAXException {
+        this.xmlHandler = new XMLHandler();
         this.initComponents();
     }
 
@@ -107,6 +128,13 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            xmlHandler.setPlayer1(player1);
+            xmlHandler.setPlayer2(player2);
+            xmlHandler.setGameType(gameType);
+            xmlHandler.setEnemyType(enemyType);
+
+            xmlHandler.writeXML();
+
             dispose();
             MainFrame mainFrame = new MainFrame();
             mainFrame.setVisible(true);
