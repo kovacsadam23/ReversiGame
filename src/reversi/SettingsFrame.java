@@ -4,6 +4,8 @@ import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ public class SettingsFrame extends BaseFrame{
     String player1;
     String player2;
     XMLHandler xmlHandler;
+    JTextField pl1, pl2;
 
     JComboBox gjcb, ejcb;
 
@@ -46,7 +49,7 @@ public class SettingsFrame extends BaseFrame{
         JPanel s1 = new JPanel();
         JLabel p1 = new JLabel("Player 1's name:");
         p1.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JTextField pl1 = new JTextField(30);
+        pl1 = new JTextField(30);
         pl1.setFont(new Font("Courier New", Font.PLAIN, 30));
 
         s1.add(p1);
@@ -55,7 +58,7 @@ public class SettingsFrame extends BaseFrame{
         JPanel s2 = new JPanel();
         JLabel p2 = new JLabel(("Player 2's name:"));
         p2.setFont(new Font("Courier New", Font.PLAIN, 30));
-        JTextField pl2 = new JTextField(30);
+        pl2 = new JTextField(30);
         pl2.setFont(new Font("Courier New", Font.PLAIN, 30));
 
         s2.add(p2);
@@ -128,12 +131,29 @@ public class SettingsFrame extends BaseFrame{
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            gameType = gjcb.getSelectedIndex() + 1;
+            enemyType = ejcb.getSelectedIndex() + 1;
+            player1 = pl1.getText();
+            player2 = pl2.getText();
+
             xmlHandler.setPlayer1(player1);
             xmlHandler.setPlayer2(player2);
             xmlHandler.setGameType(gameType);
             xmlHandler.setEnemyType(enemyType);
 
-            xmlHandler.writeXML();
+            try {
+                xmlHandler.writeXML();
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            } catch (SAXException saxException) {
+                saxException.printStackTrace();
+            } catch (TransformerConfigurationException transformerConfigurationException) {
+                transformerConfigurationException.printStackTrace();
+            } catch (TransformerException transformerException) {
+                transformerException.printStackTrace();
+            }
 
             dispose();
             MainFrame mainFrame = new MainFrame();

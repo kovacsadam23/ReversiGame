@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding ="UTF-8"?>
-<settings>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><settings>
 	<player1>
 		<name>Player 1</name>
 	</player1>
@@ -9,11 +8,11 @@
 	</player2>
 	
 	<enemyType>
-		<type>2</type>
+		<type>1</type>
 	</enemyType>
 
 	<gameType>
-		<type>0</type>
+		<type>1</type>
 	</gameType>
 	
 </settings>
