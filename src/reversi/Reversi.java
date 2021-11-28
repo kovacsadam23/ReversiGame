@@ -17,6 +17,7 @@ public class Reversi extends BaseFrame{
     int opponent;
     JPanel table;
     JTextArea message;
+    JLabel moves;
     boolean passed = false;
 
     private void gameTypeSelect(int type) {
@@ -49,16 +50,7 @@ public class Reversi extends BaseFrame{
         JPanel score = new JPanel();
         score.setLayout(new BoxLayout(score, BoxLayout.Y_AXIS));
 
-        String whoMoves;
-        if (currentPlayer == 0) {
-            whoMoves = players[0].getName() + " moves";
-        }
-        else {
-            whoMoves = players[1].getName() + " moves";
-        }
-
-        JLabel moves = new JLabel();
-        moves.setText(whoMoves);
+        moves = new JLabel();
         moves.setFont(new Font("Courier New", Font.BOLD, 50));
         moves.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -98,25 +90,41 @@ public class Reversi extends BaseFrame{
 
     public void nextMove(Square sq) throws IOException {
         message.setText("");
+
+        if (players[currentPlayer].isAutomated()) {
+            sq = players[currentPlayer].nextMove(this);
+        }
+
         if (board.hasValidMove(players[currentPlayer])) {
-            if (board.isValidMove(players[currentPlayer], sq.getx(), sq.gety())) {
+            if (this.isValidMove(players[currentPlayer], sq.getx(), sq.gety())) {
                 board.makeMove(players[currentPlayer], sq);
                 board.draw();
-                currentPlayer = 1- currentPlayer;
+                currentPlayer = 1 - currentPlayer;
                 passed = false;
-            }
-            else {
+            } else {
                 message.setText("Wrong Move");
+                board.drawValidMoves(players[currentPlayer]);
             }
-        }
-        else {
+        } else {
             message.setText("Does not have valid move, must pass");
-            if (passed || gameType == 0);
+            if (passed || gameType == 0) ;
             {
                 message.setText("End of game");
             }
             passed = true;
             currentPlayer = 1 - currentPlayer;
+        }
+
+        String whoMoves;
+        if (currentPlayer == 0) {
+            whoMoves = players[0].getName() + " moves";
+        } else {
+            whoMoves = players[1].getName() + " moves";
+        }
+        moves.setText(whoMoves);
+
+        if (players[currentPlayer].isAutomated()) {
+            message.setText("Click on the board to continue...");
         }
     }
 
@@ -172,6 +180,33 @@ public class Reversi extends BaseFrame{
         else {
             System.out.println("Draw");
         }*/
+    }
+
+
+    public boolean isValidMove(Player player, int x, int y) {
+        int color = player.getColor();
+
+        if (board.getPiece(x, y) == null)
+        {
+            for (int dx = -1; dx <= 1; dx++)                /// checking all the directions (except for null vector)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    if (dx != 0 || dy != 0)
+                    {
+                        if(board.checkLine(x, y, dx, dy, color))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return false;
+        }
     }
 // _____________________________________________________________________________________________________________________
 
@@ -233,29 +268,18 @@ public class Reversi extends BaseFrame{
         }
 
 
-        public boolean isValidMove(Player player, int x, int y) {
-            int color = player.getColor();
+        public void drawValidMoves(Player player) {
+            ImageIcon x = new ImageIcon("x.png");
+            Image xim = x.getImage();
 
-            if (this.getPiece(x, y) == null)
-            {
-                for (int dx = -1; dx <= 1; dx++)                /// checking all the directions (except for null vector)
-                {
-                    for (int dy = -1; dy <= 1; dy++)
-                    {
-                        if (dx != 0 || dy != 0)
-                        {
-                            if(checkLine(x, y, dx, dy, color))
-                            {
-                                return true;
-                            }
-                        }
+            Image x_red = xim.getScaledInstance(60, 60, 0);
+
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (isValidMove(player, i, j)) {
+                        fields[i][j].setIcon(new ImageIcon(x_red));
                     }
                 }
-                return false;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -374,7 +398,7 @@ public class Reversi extends BaseFrame{
 
             for (int r = 0; r < 8; r++) {
                 for (int c = 0; c < 8; c++) {
-
+                    fields[r][c].setIcon(null);
                     if (pcs[r][c] != null) {
                         if (pcs[r][c].getColor() == 0) {
                             fields[r][c].setIcon(new ImageIcon(white_reduced));

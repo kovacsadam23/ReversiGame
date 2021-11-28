@@ -21,9 +21,10 @@ public class SettingsFrame extends BaseFrame implements XMLHandler{
         // back.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.addActionListener(backListener);
 
+        ActionListener saveListener = new SaveButtonActionListener();
         JButton save = new JButton("Save & Back");
         save.setFont(new Font("Courier New", Font.PLAIN, 30));
-
+        save.addActionListener(saveListener);
 
         JPanel s1 = new JPanel();
         JLabel p1 = new JLabel("Player 1's name:");

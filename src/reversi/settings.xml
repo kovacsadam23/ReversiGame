@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding ="UTF-8"?>
+<settings>
+	<player1>
+		<name>Player 1</name>
+	</player1>
+	
+	<player2>
+		<name>Player 2</name>
+	</player2>
+	
+	<enemyType>
+		<type>1</type>
+	</enemyType>
+
+	<gameType>
+		<type>0</type>
+	</gameType>
+	
+</settings>
