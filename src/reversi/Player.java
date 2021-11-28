@@ -49,11 +49,7 @@ public class Player {
 
         public TestPlayer(String name, int color) throws IOException {
             super(name, color);
-            if (reader == null) {
-                reader = new BufferedReader(new FileReader("testplayer.moves"));
-                reader.mark(0);
-            }
-            reader.reset();
+            reader = new BufferedReader(new FileReader("testplayer.moves"));
         }
 
 
