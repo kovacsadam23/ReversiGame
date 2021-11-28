@@ -1,9 +1,7 @@
 package reversi;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Player {
     String name;
@@ -28,18 +26,12 @@ public class Player {
         return false;
     }
 
-    public Square nextMove(Reversi reversi) {
+    public Square nextMove(Reversi reversi) throws IOException {
         return new Square(0, 0);
     }
 
-    /*
-        public Square nextMove(Board board) throws FileNotFoundException {
-
-        }
-    }
 
 
- */
     static class HumanPlayer extends Player {
         public HumanPlayer(String name, int color) {
             super(name, color);
@@ -52,29 +44,40 @@ public class Player {
     }
 
 
-/*
-    public class TestPlayer extends Player {
-        public TestPlayer(String name, int color) {
+    static class TestPlayer extends Player {
+        static BufferedReader reader = null;
+
+        public TestPlayer(String name, int color) throws IOException {
             super(name, color);
+            if (reader == null) {
+                reader = new BufferedReader(new FileReader("testplayer.moves"));
+                reader.mark(0);
+            }
+            reader.reset();
         }
 
-        @Override
-        public Square nextMove(Board board) throws FileNotFoundException {
-            File moves = new File("testplayer.moves");
-            Scanner sc = new Scanner(moves);
 
-            String nextMove = sc.nextLine();
-            int x = (int)nextMove.charAt(1);
-            int y = (int)nextMove.charAt(2);
-            sc.close();
+        @Override
+        public boolean isAutomated() {
+            return true;
+        }
+
+
+        @Override
+        public Square nextMove(Reversi reversi) throws IOException {
+            String nextMove = reader.readLine();
+            char xc = nextMove.charAt(1);
+            char yc = nextMove.charAt(2);
+
+            int x = xc - 'A';
+            int y = yc - '1';
 
             return new Square(x, y);
         }
     }
 
 
-    */
-static class AIPlayer extends Player {
+    static class AIPlayer extends Player {
         public AIPlayer(String name, int color) {
             super(name, color);
         }

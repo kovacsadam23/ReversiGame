@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class Reversi extends BaseFrame{
-    int gameType = 0;
+    int gameType;
     Player[] players = new Player[2];
     Board board;
     int currentPlayer = 0;
@@ -21,7 +21,8 @@ public class Reversi extends BaseFrame{
     JPanel table;
     JTextArea message;
     JLabel moves;
-    boolean passed = false;
+    boolean passed;
+    boolean endOfGame = false;
     XMLHandler xmlHandler;
 
     private void gameTypeSelect(int type) {
@@ -61,8 +62,8 @@ public class Reversi extends BaseFrame{
             players[1] = new Player.AIPlayer(player2, 1);
         }
         else {
-            players[0] = new Player(player1, 0);
-            players[1] = new Player(player2, 1);
+            players[0] = new Player.TestPlayer(player1, 0);
+            players[1] = new Player.TestPlayer(player2, 1);
         }
 
         JPanel game = new JPanel();
@@ -110,27 +111,53 @@ public class Reversi extends BaseFrame{
 
 
     public void nextMove(Square sq) throws IOException {
-        message.setText("");
+        boolean passPrinted = false;
 
-        if (players[currentPlayer].isAutomated()) {
-            sq = players[currentPlayer].nextMove(this);
+        if (endOfGame)
+        {
+            return;
         }
 
+        message.setText("");
+
         if (board.hasValidMove(players[currentPlayer])) {
+            if (players[currentPlayer].isAutomated()) {
+                sq = players[currentPlayer].nextMove(this);
+            }
+
             if (this.isValidMove(players[currentPlayer], sq.getx(), sq.gety())) {
                 board.makeMove(players[currentPlayer], sq);
                 board.draw();
                 currentPlayer = 1 - currentPlayer;
                 passed = false;
-            } else {
+            }
+            else {
                 message.setText("Wrong Move");
                 board.drawValidMoves(players[currentPlayer]);
             }
-        } else {
-            message.setText("Does not have valid move, must pass");
-            if (passed || gameType == 1) ;
+        }
+        else {
+            message.setText(players[currentPlayer].getName() + " \ndoes not have valid move, \nmust pass");
+            passPrinted = true;
+            int whiteCount = board.countColor(0);
+            int blackCount = board.countColor(1);
+            if (passed || this.gameType == 1 || (whiteCount + blackCount) == 64)            // Reversi
             {
-                message.setText("End of game");
+                String res;
+
+                if (whiteCount > blackCount) {
+                    res = players[0].getName() + " WON";
+                }
+                else if (blackCount > whiteCount) {
+                    res = players[1].getName() + " WON";
+                }
+                else {
+                    res = "DRAW";
+                }
+
+                message.setText("End of game\n\n" + res + "\n\n" + players[0].getName() + ": "
+                        + whiteCount + "\n" + players[1].getName() + ": " + blackCount);
+                endOfGame = true;
             }
             passed = true;
             currentPlayer = 1 - currentPlayer;
@@ -144,8 +171,13 @@ public class Reversi extends BaseFrame{
         }
         moves.setText(whoMoves);
 
-        if (players[currentPlayer].isAutomated()) {
+        if (players[currentPlayer].isAutomated() && !passPrinted) {
             message.setText("Click on the board \nto continue...");
+        }
+        else if (gameType == 2 && !board.hasValidMove(players[currentPlayer]) && !endOfGame){
+            message.setText(players[currentPlayer].getName() + " \ndoes not have valid move, \nmust pass");
+            passed = true;
+            currentPlayer = 1 - currentPlayer;
         }
     }
 
@@ -407,5 +439,4 @@ public class Reversi extends BaseFrame{
             }
         }
     }
-
 }

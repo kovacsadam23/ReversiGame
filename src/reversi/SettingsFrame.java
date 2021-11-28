@@ -75,18 +75,20 @@ public class SettingsFrame extends BaseFrame{
         e.setFont(new Font("Courier New", Font.PLAIN, 30));
         ejcb = new JComboBox(enemies);
         ejcb.setFont(new Font("Arial", Font.PLAIN, 30));
+        ejcb.setSelectedIndex(enemyType - 1);
 
         s4.add(e);
         s4.add(ejcb);
 
         JPanel s3 = new JPanel();
-        String[] gameType = new String[2];
-        gameType[0] = "Reversi";
-        gameType[1] = "Othello";
+        String[] gt = new String[2];
+        gt[0] = "Reversi";
+        gt[1] = "Othello";
         JLabel g = new JLabel("Game type:");
         g.setFont(new Font("Courier New", Font.PLAIN, 30));
-        gjcb = new JComboBox(gameType);
+        gjcb = new JComboBox(gt);
         gjcb.setFont(new Font("Arial", Font.PLAIN, 30));
+        gjcb.setSelectedIndex(gameType - 1);
 
         s3.add(g);
         s3.add(gjcb);
