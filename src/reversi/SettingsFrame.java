@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SettingsFrame extends BaseFrame{
     int gameType = 0;                   // 1 - Reversi, 2 - Othello
@@ -18,6 +20,7 @@ public class SettingsFrame extends BaseFrame{
     String player2;
     XMLHandler xmlHandler;
     JTextField pl1, pl2;
+    ArrayList<String> gt;
 
     JComboBox gjcb, ejcb;
 
@@ -81,12 +84,13 @@ public class SettingsFrame extends BaseFrame{
         s4.add(ejcb);
 
         JPanel s3 = new JPanel();
+        /*
         String[] gt = new String[2];
         gt[0] = "Reversi";
-        gt[1] = "Othello";
+        gt[1] = "Othello"; */
         JLabel g = new JLabel("Game type:");
         g.setFont(new Font("Courier New", Font.PLAIN, 30));
-        gjcb = new JComboBox(gt);
+        gjcb = new JComboBox(gt.toArray());
         gjcb.setFont(new Font("Arial", Font.PLAIN, 30));
         gjcb.setSelectedIndex(gameType - 1);
 
@@ -113,6 +117,7 @@ public class SettingsFrame extends BaseFrame{
     }
 
     public SettingsFrame() throws ParserConfigurationException, IOException, SAXException {
+        gt = new ArrayList<>(Arrays.asList("Reversi", "Othello"));
         this.xmlHandler = new XMLHandler();
         this.initComponents();
     }
