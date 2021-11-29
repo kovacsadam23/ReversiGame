@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InfoFrame extends MainFrame{
+public class InfoFrame extends BaseFrame{
     public void initComponents() {
         JPanel p = new JPanel();
         JLabel title = new JLabel("Help");
@@ -39,6 +39,10 @@ public class InfoFrame extends MainFrame{
         p.add(back);
 
         this.add(p, BorderLayout.CENTER);
+    }
+
+    public InfoFrame() {
+        initComponents();
     }
 
 

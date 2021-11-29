@@ -1,7 +1,11 @@
 package reversi;
 
+import org.junit.Test;
+
 import java.io.*;
 import java.util.Random;
+
+import static org.junit.Assert.*;
 
 public class Player {
     String name;
@@ -98,6 +102,50 @@ public class Player {
                 }
             }
             return new Square(x, y);
+        }
+    }
+
+
+    public static class Test extends Player {
+        public Test() {
+            super("Player", 1);
+        }
+
+        @org.junit.Test
+        public void testGetColor() {
+            Test test = new Test();
+            int expected = 1;           // konstruktor
+            int result = test.getColor();
+            assertEquals(expected, result);
+        }
+
+        @org.junit.Test
+        public void testGetName() {
+            Test test = new Test();
+            String expected = "Player"; // konstruktor
+            String result = test.getName();
+            assertEquals(expected, result);
+        }
+
+        @org.junit.Test
+        public void testIsAutomatedHumanPlayer() {
+            HumanPlayer test = new HumanPlayer("Player", 1);
+            boolean result = test.isAutomated();
+            assertFalse(result);
+        }
+
+        @org.junit.Test
+        public void testIsAutomatedAIPlayer() {
+            AIPlayer test = new AIPlayer("Player", 1);
+            boolean result = test.isAutomated();
+            assertTrue(result);
+        }
+
+        @org.junit.Test
+        public void testIsAutomatedTestPlayer() throws IOException {
+            TestPlayer test = new TestPlayer("Player", 1);
+            boolean result = test.isAutomated();
+            assertTrue(result);
         }
     }
 }

@@ -1,16 +1,20 @@
 package reversi;
 
+import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+
+
 
 public class Reversi extends BaseFrame{
     int gameType;
@@ -25,17 +29,6 @@ public class Reversi extends BaseFrame{
     boolean endOfGame = false;
     XMLHandler xmlHandler;
 
-    private void gameTypeSelect(int type) {
-        this.gameType = type;
-    }
-
-    private void opponentTypeSelect(int type) {
-        this.enemyType = type;
-    }
-
-    private void setPlayerName() {
-
-    }
 
     public Reversi() throws IOException, ParserConfigurationException, SAXException {
         this.players[0] = null;
@@ -436,6 +429,22 @@ public class Reversi extends BaseFrame{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+            }
+        }
+
+
+        public static class TestBoard extends Reversi{
+            public TestBoard() throws IOException, ParserConfigurationException, SAXException {
+                super();
+            }
+
+            @Test
+            public void testGetPiece() {
+                Board board = new Board();
+                Piece expected = new Piece(0);
+                board.pcs[1][1] = expected;
+                Piece result = board.getPiece(1, 1);
+                assertEquals(expected, result);
             }
         }
     }
