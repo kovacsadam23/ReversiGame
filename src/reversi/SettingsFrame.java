@@ -150,16 +150,8 @@ public class SettingsFrame extends BaseFrame{
 
             try {
                 xmlHandler.writeXML();
-            } catch (ParserConfigurationException ex) {
+            } catch (ParserConfigurationException | IOException | SAXException | TransformerException ex) {
                 ex.printStackTrace();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            } catch (SAXException saxException) {
-                saxException.printStackTrace();
-            } catch (TransformerConfigurationException transformerConfigurationException) {
-                transformerConfigurationException.printStackTrace();
-            } catch (TransformerException transformerException) {
-                transformerException.printStackTrace();
             }
 
             dispose();

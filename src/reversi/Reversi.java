@@ -48,7 +48,7 @@ public class Reversi extends BaseFrame{
 
         if (enemyType == 1) {
             players[0] = new Player.HumanPlayer(player1, 0);
-            players[1] = new Player(player2, 1);
+            players[1] = new Player.HumanPlayer(player2, 1);
         }
         else if (enemyType == 2) {
             players[0] = new Player.HumanPlayer(player1, 0);
