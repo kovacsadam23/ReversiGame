@@ -8,7 +8,7 @@ felhasználói kézikönyv
 
 
 # A program használata
-A Menü
+# A Menü
 Megnyitás után az alábbi képernyő látható:
 A beállítások megnyitásához kattintson a Settings gombra. A 
 Help menüpont alatt a játékkal kapcsolatban talál érdekes 
